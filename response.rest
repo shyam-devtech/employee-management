@@ -1,1 +1,5 @@
 GET http://localhost:51723/getallemployees
+
+PORT=51723
+SECRET_KEY="secretkey"
+DB_LOCAL_URI="mongodb://localhost:27017/companyDb"
