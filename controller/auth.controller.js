@@ -3,8 +3,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Admin = require("../models/Admin");
 
-const key = "secretkey";
-
 const register = async (req, res) => {
   const admin = await new Admin({
     fullname: req.body.fullname,
@@ -40,7 +38,7 @@ const login = async (req, res) => {
     if (!pwdIsValid) {
       res.status(401).send({ message: "Invalid password" });
     }
-    const token = jwt.sign({ id: admin.id }, key, {
+    const token = jwt.sign({ id: admin.id }, process.env.ACCESS_TOKEN_SECRET_KEY, {
       expiresIn: 86400,
     });
 
@@ -55,7 +53,7 @@ const login = async (req, res) => {
 const profile = async (req, res) => {
   const data = await Admin.find();
   const token = req.headers.authorization.split(" ")[1];
-  const decoded = jwt.verify(token, key);
+  const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
     try {
       res.status(200).send(data);
       console.log(decoded.id)

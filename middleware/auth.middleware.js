@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Admin = require("../models/Admin");
-const key = "secretkey";
+// const key = "secretkey";
 
 const verifyToken = async (req, res, next) => {
   let token;
@@ -14,7 +14,7 @@ const verifyToken = async (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
 
       // Verify token
-      const decoded = jwt.verify(token, key);
+      const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
 
       /* Get user from the token-> here req.user is set..
         which can be used in next middleware functions
